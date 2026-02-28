@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Creatividad Ultra Tech</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icon.png">
+
+<style>
+*{
+ margin:0;
+ padding:0;
+ box-sizing:border-box;
+ font-family:'Segoe UI', Tahoma, sans-serif;
+}
+
+body{
+ min-height:100vh;
+ background:linear-gradient(135deg,#1e3a8a,#0ea5e9,#9333ea);
+ background-size:400% 400%;
+ animation:fondo 12s ease infinite;
+ color:white;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ padding:25px;
+}
+
+@keyframes fondo{
+ 0%{background-position:0% 50%}
+ 50%{background-position:100% 50%}
+ 100%{background-position:0% 50%}
+}
+
+h1{
+ margin-bottom:20px;
+ font-size:2.4rem;
+ text-shadow:0 0 15px rgba(255,255,255,0.3);
+}
+
+.slide{
+ display:none;
+ animation:fade 0.5s ease;
+}
+
+.slide.activa{
+ display:block;
+}
+
+@keyframes fade{
+ from{opacity:0; transform:translateY(10px)}
+ to{opacity:1; transform:translateY(0)}
+}
+
+/* TARJETAS */
+.card{
+ backdrop-filter:blur(12px);
+ background:rgba(255,255,255,0.08);
+ border:1px solid rgba(255,255,255,0.2);
+ padding:25px;
+ border-radius:20px;
+ margin:15px;
+ width:380px;
+ box-shadow:0 15px 35px rgba(0,0,0,0.3);
+ transition:0.3s;
+}
+
+.card:hover{
+ transform:translateY(-5px);
+ box-shadow:0 20px 45px rgba(0,0,0,0.4);
+}
+
+/* BOTONES */
+button{
+ padding:12px 18px;
+ margin:6px;
+ border:none;
+ border-radius:12px;
+ cursor:pointer;
+ font-weight:bold;
+ background:linear-gradient(135deg,#22c55e,#06b6d4);
+ color:white;
+ box-shadow:0 5px 15px rgba(0,0,0,0.3);
+ transition:0.25s;
+}
+
+button:hover{
+ transform:scale(1.08);
+ box-shadow:0 0 15px rgba(255,255,255,0.6);
+}
+
+/* TEXTO PANEL */
+.stats{
+ display:flex;
+ justify-content:space-around;
+ margin-top:15px;
+ font-size:0.95rem;
+}
+
+/* PREGUNTA */
+#pregunta{
+ margin:15px 0;
+ font-size:1.3rem;
+ font-weight:bold;
+}
+
+/* AVATAR */
+#avatar{
+ border-radius:50%;
+ margin-top:10px;
+ border:3px solid #38bdf8;
+ box-shadow:0 0 20px #38bdf8;
+}
+
+/* CANVAS */
+#lienzo{
+ background:white;
+ border-radius:15px;
+ border:3px solid #38bdf8;
+ box-shadow:0 0 20px rgba(0,0,0,0.4);
+ margin-top:10px;
+}
+
+/* LISTA RANKING */
+ul{
+ list-style:none;
+ margin-top:10px;
+}
+
+li{
+ padding:6px;
+ background:rgba(255,255,255,0.1);
+ margin:5px 0;
+ border-radius:8px;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+<h1>🚀 Creatividad Ultra Tech</h1>
+<p style="opacity:0.8;margin-bottom:10px">
+Entrena tu mente • Responde • Crea • Dibuja
+</p>
+
+<!-- INFO SOBRE CREATIVIDAD PRO -->
+<div class="card">
+
+<button onclick="toggleInfo()" style="width:100%;font-size:16px">
+📘 Mostrar / Ocultar información
+</button>
+
+<div id="panelInfo" style="display:none;margin-top:15px">
+
+<div id="slideContainer">
+
+<h2 class="slide">🧠 Despierta tu Creatividad</h2>
+
+<div class="slide">
+<p>"La creatividad es la inteligencia divirtiéndose." — Albert Einstein</p>
+</div>
+
+<div class="slide">
+<h3>¿Qué es la creatividad?</h3>
+<p>
+La creatividad es la capacidad de generar ideas nuevas, originales y útiles.
+Permite encontrar soluciones diferentes y expresar ideas de forma innovadora.
+</p>
+</div>
+
+<div class="slide">
+<h3>Tipos de creatividad</h3>
+<ul>
+<li>Creatividad artística</li>
+<li>Creatividad científica</li>
+<li>Creatividad práctica</li>
+<li>Creatividad innovadora</li>
+</ul>
+</div>
+
+<div class="slide">
+<h3>¿Cómo se desarrolla?</h3>
+<ul>
+<li>Curiosidad</li>
+<li>Práctica constante</li>
+<li>Lectura</li>
+<li>Observación</li>
+<li>Experiencias nuevas</li>
+<li>Trabajo en equipo</li>
+</ul>
+</div>
+
+<div class="slide">
+<h3>Factores que ayudan</h3>
+<ul>
+<li>Ambiente positivo</li>
+<li>Tiempo libre</li>
+<li>Confianza personal</li>
+<li>Motivación</li>
+<li>Concentración</li>
+</ul>
+</div>
+
+<div class="slide">
+<h3>Lo que bloquea la creatividad</h3>
+<ul>
+<li>Miedo al fracaso</li>
+<li>Pensamiento negativo</li>
+<li>Críticas constantes</li>
+<li>Falta de confianza</li>
+<li>Rutina excesiva</li>
+</ul>
+</div>
+
+</div>
+
+<br>
+
+<button onclick="anteriorSlide()">⬅ Anterior</button>
+<button onclick="siguienteSlide()">Siguiente ➡</button>
+<button onclick="leerSlide()">🔊 Leer contenido</button>
+
+</div>
+</div>
+
+<!-- LOGIN -->
+<div class="card">
+<button onclick="loginGoogle()">Login con Google</button>
+<button onclick="logout()">Salir</button>
+<p id="user"></p>
+<img id="avatar" width="60" style="border-radius:50%">
+</div>
+
+<!-- JUEGO -->
+<div class="card">
+ <p>⏱ Tiempo: <span id="timer">0</span>s</p>
+<h2 id="pregunta"></h2>
+<button onclick="iniciarJuego()" id="btnIniciar">
+▶ Iniciar actividad
+</button>
+<div id="respuestas"></div>
+
+<button id="btnReiniciar" onclick="reiniciar()" style="display:none;">
+ Reiniciar juego
+</button>
+
+<div class="stats">
+ <div>⭐ <span id="score">0</span></div>
+ <div>⏱ <span id="timer">0</span>s</div>
+ <div>📊 <span id="porcentaje">0</span>%</div>
+</div>
+
+<button id="btnReiniciar" onclick="reiniciar()" style="display:none;">
+ Reiniciar juego
+</button>
+
+<audio id="okSound" src="https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"></audio>
+<audio id="failSound" src="https://actions.google.com/sounds/v1/cartoon/clang_and_wobble.ogg"></audio>
+</div>
+
+<!-- RANKING -->
+ <!-- DIBUJO CREATIVO -->
+<div class="card">
+
+<h3>🎨 Reto creativo de dibujo</h3>
+
+<p style="opacity:0.8">
+Presiona <b>Generar reto</b> y dibuja con el mouse lo que aparezca.
+</p>
+
+<button onclick="generarReto()" style="font-size:16px">
+ 🎲 Generar reto creativo
+</button>
+
+<h2 id="retoTexto">---</h2>
+
+<canvas id="lienzo" width="300" height="300"
+style="background:white;border-radius:10px;cursor:crosshair;"></canvas>
+
+<br><br>
+
+<button onclick="limpiarLienzo()">🧽 Limpiar dibujo</button>
+
+</div>
+<div class="card">
+<h3>Ranking</h3>
+<ul id="ranking"></ul>
+<button onclick="borrarRanking()">🧹 Limpiar ranking</button>
+</div>
+
+<div class="card">
+<h3>🎓 Certificado de creatividad</h3>
+<p>Descarga tu certificado al finalizar el juego</p>
+<button onclick="generarCertificado()">📄 Descargar certificado</button>
+</div>
+
+<div class="card" id="videoFinal" style="display:none;text-align:center">
+
+<h3>🎬 Video final de creatividad</h3>
+<p>Mira este video después de completar el juego</p>
+
+<iframe width="100%" height="215"
+src="https://www.youtube.com/embed/MA-3xmDCmo0"
+title="Video creatividad"
+frameborder="0"
+allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+allowfullscreen>
+</iframe>
+
+</div>
+
+<!-- FIREBASE -->
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-app.js"
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.10.0/firebase-auth.js"
+import { 
+ getFirestore,
+ collection,
+ addDoc,
+ onSnapshot,
+ query,
+ orderBy,
+ limit,
+ deleteDoc,
+ getDocs
+} from "https://www.gstatic.com/firebasejs/12.10.0/firebase-firestore.js"
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBNwBxezpsUTWYS6-GTNsVXhV4p-FEBKMs",
+  authDomain: "creatividad-ultra-tech.firebaseapp.com",
+  projectId: "creatividad-ultra-tech",
+  storageBucket: "creatividad-ultra-tech.appspot.com",
+  messagingSenderId: "1061255855846",
+  appId: "1:1061255855846:web:6060744d0747a8cbd70527"
+}
+
+const app = initializeApp(firebaseConfig)
+const auth = getAuth(app)
+const db = getFirestore(app)
+
+window.auth = auth
+window.db = db
+
+/* LOGIN */
+window.loginGoogle = async function(){
+ const provider = new GoogleAuthProvider()
+ await signInWithPopup(auth, provider)
+}
+
+window.logout = async function(){
+ await signOut(auth)
+ location.reload()
+}
+
+onAuthStateChanged(auth,user=>{
+ if(user){
+  document.getElementById("user").textContent=user.displayName
+  document.getElementById("avatar").src=user.photoURL
+ }
+})
+
+
+
+/* JUEGO */
+const preguntas = [
+
+ { q:'¿Qué hábito estimula más la creatividad?', 
+   a:['Explorar cosas nuevas','Hacer siempre lo mismo'], 
+   c:0 },
+
+ { q:'¿Qué suele bloquear la creatividad?', 
+   a:['Miedo al error','Curiosidad'], 
+   c:0 },
+
+ { q:'¿Qué actividad ayuda a generar ideas nuevas?', 
+   a:['Lluvia de ideas','Memorizar sin pensar'], 
+   c:0 },
+
+ { q:'¿Qué actitud favorece la creatividad?', 
+   a:['Mentalidad abierta','Rigidez mental'], 
+   c:0 },
+
+ { q:'¿Qué tipo de pensamiento impulsa la creatividad?', 
+   a:['Pensamiento divergente','Pensamiento repetitivo'], 
+   c:0 },
+
+ { q:'¿Qué ayuda a encontrar soluciones creativas?', 
+   a:['Experimentar','Evitar cambios'], 
+   c:0 },
+
+ { q:'¿Qué ambiente favorece la creatividad?', 
+   a:['Ambiente flexible','Ambiente muy controlado'], 
+   c:0 },
+
+ { q:'¿Qué hace una persona creativa ante un problema?', 
+   a:['Busca varias soluciones','Se rinde rápido'], 
+   c:0 },
+
+ { q:'¿Qué ayuda a desarrollar la imaginación?', 
+   a:['Leer y crear historias','No cuestionar nada'], 
+   c:0 },
+
+ { q:'¿Qué habilidad está relacionada con la creatividad?', 
+   a:['Innovar','Copiar siempre igual'], 
+   c:0 }
+
+]
+preguntas.sort(()=>Math.random()-0.5)
+
+let i = 0
+let score = 0
+let correctas = 0
+let errores = 0
+
+let tiempo = 0
+let temporizador = null
+
+const timerTxt = document.getElementById("timer")
+const porcentajeTxt = document.getElementById("porcentaje")
+
+const pregunta = document.getElementById('pregunta')
+const respuestas = document.getElementById('respuestas')
+const scoreTxt = document.getElementById('score')
+
+function responder(esCorrecta){
+
+if(esCorrecta){
+  score += 10
+  correctas++
+  document.getElementById("okSound").play()
+ }else{
+  errores++
+  document.getElementById("failSound").play()
+ }
+
+ scoreTxt.textContent = score
+
+ const porcentaje = Math.round((correctas/(i+1))*100)
+ porcentajeTxt.textContent = porcentaje
+
+ i++
+ cargar()
+}
+
+function iniciarTiempo(){
+
+ clearInterval(temporizador)
+
+ tiempo = 0
+ document.getElementById("timer").textContent = tiempo
+
+ temporizador = setInterval(()=>{
+   tiempo++
+   document.getElementById("timer").textContent = tiempo
+ },1000)
+
+}
+function cargar(){
+
+ if(!preguntas[i]){
+
+  pregunta.textContent = "🎉 Juego terminado"
+  respuestas.innerHTML = `
+     <p>⭐ Puntaje final: ${score}</p>
+     <p>📊 Aciertos: ${correctas}</p>
+     <p>❌ Errores: ${errores}</p>
+     <p>⏱ Tiempo total: ${tiempo} segundos</p>
+  `
+
+  document.getElementById("btnReiniciar").style.display = "block"
+
+  clearInterval(temporizador)
+  guardarRanking()
+  document.getElementById("videoFinal").style.display = "block"
+  return
+ }
+
+const q = preguntas[i]
+
+pregunta.textContent = q.q
+respuestas.innerHTML = ""
+
+// crear arreglo con bandera de correcta
+let opciones = q.a.map((texto,index)=>({
+ texto:texto,
+ correcta:index === q.c
+}))
+
+// mezclar opciones
+opciones.sort(()=>Math.random()-0.5)
+
+// dibujar botones
+opciones.forEach(op=>{
+ const btn = document.createElement("button")
+ btn.textContent = op.texto
+ btn.onclick = ()=> responder(op.correcta)
+ respuestas.appendChild(btn)
+})
+}
+
+// 🔁 FUNCIÓN REINICIAR JUEGO
+window.reiniciar = function(){
+
+ i = 0
+ score = 0
+ correctas = 0
+ errores = 0
+
+ preguntas.sort(()=>Math.random()-0.5)
+
+ scoreTxt.textContent = 0
+ porcentajeTxt.textContent = 0
+
+ document.getElementById("btnReiniciar").style.display = "none"
+
+ iniciarTiempo()
+ cargar()
+ document.getElementById("videoFinal").style.display = "none"
+}
+
+window.iniciarJuego = function(){
+
+ document.getElementById("btnIniciar").style.display = "none"
+
+ iniciarTiempo()
+ cargar()
+}
+
+/* ===========================
+   SISTEMA DE DIBUJO
+=========================== */
+
+// retos posibles
+const retos = [
+ "Dibuja un robot futurista",
+ "Dibuja un animal inventado",
+ "Dibuja tu casa del futuro",
+ "Dibuja un monstruo amigable",
+ "Dibuja un planeta desconocido",
+ "Dibuja un superhéroe original",
+ "Dibuja un vehículo volador",
+ "Dibuja un paisaje de otro mundo",
+ "Dibuja un objeto mágico",
+ "Dibuja una ciudad futurista"
+]
+
+// generar reto aleatorio
+window.generarReto = function(){
+ const r = retos[Math.floor(Math.random()*retos.length)]
+ document.getElementById("retoTexto").textContent = r
+}
+
+// canvas
+const canvas = document.getElementById("lienzo")
+const ctx = canvas.getContext("2d")
+
+let dibujando = false
+
+canvas.addEventListener("mousedown", ()=> dibujando = true)
+canvas.addEventListener("mouseup", ()=> dibujando = false)
+canvas.addEventListener("mouseleave", ()=> dibujando = false)
+
+canvas.addEventListener("mousemove", dibujar)
+
+function dibujar(e){
+ if(!dibujando) return
+
+ const rect = canvas.getBoundingClientRect()
+ const x = e.clientX - rect.left
+ const y = e.clientY - rect.top
+
+ ctx.fillStyle = "black"
+ ctx.beginPath()
+ ctx.arc(x,y,2,0,Math.PI*2)
+ ctx.fill()
+}
+
+// limpiar canvas
+window.limpiarLienzo = function(){
+ ctx.clearRect(0,0,canvas.width,canvas.height)
+}
+
+/* RANKING */
+async function guardarRanking(){
+ const user=auth.currentUser
+ if(!user) return
+ await addDoc(collection(db,"ranking"),{
+  nombre:user.displayName,
+  puntos:score,
+  time:Date.now()
+ })
+}
+
+// 🧹 BORRAR TODO EL RANKING
+window.borrarRanking = async function(){
+
+ const confirmacion = confirm("¿Seguro que quieres borrar TODO el ranking?")
+ if(!confirmacion) return
+
+ const snapshot = await getDocs(collection(db,"ranking"))
+
+ snapshot.forEach(async (docItem)=>{
+   await deleteDoc(docItem.ref)
+ })
+
+ alert("Ranking eliminado")
+}
+
+const qRanking=query(collection(db,"ranking"),orderBy("puntos","desc"),limit(10))
+onSnapshot(qRanking,snap=>{
+ const ranking=document.getElementById("ranking")
+ ranking.innerHTML=""
+ snap.forEach(d=>{
+  const li=document.createElement("li")
+  li.textContent=d.data().nombre+" "+d.data().puntos
+  ranking.appendChild(li)
+ })
+})
+
+/* ===========================
+   PANEL INFO ACORDEON + SLIDES
+=========================== */
+
+const panel = document.getElementById("panelInfo")
+const slides = document.querySelectorAll(".slide")
+let slideActual = 0
+
+function mostrarSlide(n){
+ slides.forEach(s=>s.classList.remove("activa"))
+ slides[n].classList.add("activa")
+}
+
+mostrarSlide(0)
+
+window.toggleInfo = function(){
+ panel.style.display = panel.style.display==="none" ? "block":"none"
+}
+
+window.siguienteSlide = function(){
+ slideActual++
+ if(slideActual >= slides.length) slideActual = 0
+ mostrarSlide(slideActual)
+}
+
+window.anteriorSlide = function(){
+ slideActual--
+ if(slideActual < 0) slideActual = slides.length-1
+ mostrarSlide(slideActual)
+}
+
+/* ===========================
+   VOZ LECTURA TEXTO
+=========================== */
+
+window.leerSlide = function(){
+
+ const texto = slides[slideActual].innerText
+
+ const voz = new SpeechSynthesisUtterance(texto)
+ voz.lang = "es-ES"
+ voz.rate = 0.9
+
+ speechSynthesis.cancel()
+ speechSynthesis.speak(voz)
+}
+
+/* ===========================
+   CERTIFICADO PDF
+=========================== */
+
+window.generarCertificado = function(){
+
+ const { jsPDF } = window.jspdf
+ const doc = new jsPDF("landscape")
+
+ const user = auth.currentUser
+ const nombre = user ? user.displayName : "Participante"
+ const fecha = new Date().toLocaleDateString()
+
+ const width = doc.internal.pageSize.getWidth()
+ const height = doc.internal.pageSize.getHeight()
+
+/* =========================
+   FONDO SUAVE
+========================= */
+doc.setFillColor(245,248,255)
+doc.rect(0,0,width,height,"F")
+
+/* =========================
+   MARCO DOBLE DORADO
+========================= */
+doc.setDrawColor(212,175,55)
+doc.setLineWidth(4)
+doc.rect(10,10,width-20,height-20)
+
+doc.setLineWidth(1)
+doc.rect(15,15,width-30,height-30)
+
+/* =========================
+   TITULO
+========================= */
+doc.setFont("times","bold")
+doc.setFontSize(40)
+doc.setTextColor(40,40,120)
+doc.text("CERTIFICADO", width/2, 45, {align:"center"})
+
+doc.setFontSize(18)
+doc.text("Creatividad Ultra Tech", width/2, 60, {align:"center"})
+
+/* =========================
+   TEXTO PRINCIPAL
+========================= */
+doc.setFont("times","normal")
+doc.setFontSize(16)
+doc.setTextColor(0,0,0)
+
+doc.text("Este certificado se otorga a:", width/2, 85, {align:"center"})
+
+doc.setFont("times","bold")
+doc.setFontSize(26)
+doc.setTextColor(20,60,150)
+doc.text(nombre, width/2, 100, {align:"center"})
+
+doc.setFont("times","normal")
+doc.setFontSize(16)
+doc.setTextColor(0,0,0)
+doc.text("Por completar exitosamente el entrenamiento de creatividad", width/2, 115, {align:"center"})
+
+/* =========================
+   DATOS
+========================= */
+doc.setFontSize(14)
+doc.text(`Puntaje obtenido: ${score}`, width/2, 135, {align:"center"})
+doc.text(`Aciertos: ${correctas}`, width/2, 145, {align:"center"})
+doc.text(`Tiempo total: ${tiempo} segundos`, width/2, 155, {align:"center"})
+doc.text(`Fecha: ${fecha}`, width/2, 165, {align:"center"})
+
+/* =========================
+   FIRMA REALISTA
+========================= */
+
+// línea base
+doc.setLineWidth(0.5)
+doc.line(width/2-50,185,width/2+50,185)
+
+// firma manuscrita simulada
+doc.setFont("times","italic")
+doc.setFontSize(22)
+doc.setTextColor(30,30,30)
+doc.text("Equipo Creatividad", width/2,180,{align:"center"})
+
+// cargo
+doc.setFont("times","normal")
+doc.setFontSize(12)
+doc.text("Director del Programa", width/2,195,{align:"center"})
+
+/* =========================
+   GUARDAR
+========================= */
+doc.save("Certificado_Creatividad_Pro.pdf")
+}
+
+</script>
+
+</body>
+</html>
